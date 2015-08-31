@@ -1,0 +1,149 @@
+<!doctype html>
+<html>
+<head>
+	<title>jQuery Mobile Page</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<style>
+		/* apply a natural box layout model to all elements, but allowing components to change */
+		html {
+		  box-sizing: border-box;
+		}
+		*, *:before, *:after {
+		  box-sizing: inherit;
+		}
+		body {
+			font-family: Verdana
+		}
+		article {
+			text-align: center;
+		}
+
+		.question {
+			font-size: 35vmin;
+			float: left;
+			width: 50%;
+			text-align: center;
+		}
+		header {
+			text-align: center;
+		}
+		footer {
+			padding-top: 10vm;
+			float:left;
+		    width:100%;
+		    background:#fff;
+		    border-bottom:4px solid #000;
+		    overflow:hidden;
+		    position:relative;
+		}
+		footer ul {
+			clear:left;
+			float:left;
+			list-style:none;
+			margin:0;
+			padding:0;
+			position:relative;
+			left:50%;
+			text-align:center;
+		}
+		footer ul li {
+			display:block;
+			float:left;
+			list-style:none;
+			margin:0;
+			padding:0;
+			position:relative;
+			right:50%;
+		}
+
+		.answer, .answer2 {
+			border-radius: 3px;
+			border: 2px solid #000;
+			margin: 0.5%;
+			text-align: center;
+			min-width: 15px;
+			padding: 12px;
+		}
+	</style>
+	<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+
+</head>
+<body>
+	<header>
+
+	<table style="width:100%">
+		<tr>
+			<td style="text-align:left;color:green">Goed: <span id="goeie">0</span></td>
+			<td style="text-align:center;font-weight:bold"><span id="message">Zeg het maar</span></td>
+			<td style="text-align:right;color:red">Fout: <span id="foute">0</span></td>
+		</tr>
+	</table>
+
+
+
+	</header><!-- /header -->
+	<article>
+
+		<div class="question" id="leftside">?</div><div class="question" id="rightside">?</div>
+
+	</article><!-- /content -->
+	<footer>
+		<ul>
+		<li class="answer">0</li>
+		<li class="answer">1</li>
+		<li class="answer">2</li>
+		<li class="answer">3</li>
+		<li class="answer">4</li>
+		<li class="answer">5</li>
+		<li class="answer">6</li>
+		<li class="answer">7</li>
+		<li class="answer">8</li>
+		<li class="answer">9</li>
+		<li class="answer">10</li>
+		<li class="answer2" id="newquestion" style="background-color:yellow">&nbsp; &#9733; &nbsp;</li>
+		</ul>
+	</footer><!-- /footer -->
+	<script>
+	var right = "";
+	var goeie = 0;
+	var foute = 0;
+
+	var welldone = ["OK Dan", "Goed gedaan", "Ga zo door", "Prima", "Uitstekend!"];
+	var jammerdan = ["OH NEE", "Jammer", "Nee hoor", "Helaas, fout", "Nog maar eens"];
+
+	var AA = false;
+	// Accept Answers
+
+	$("#newquestion").on('click', function(event) {
+		var left = Math.floor( Math.random() * 11 );
+		right = 10 - left;
+		$("#leftside").text(left);
+		$("#message").text("Zeg het maar");
+		$("#rightside").text("?");
+		$("#rightside").css("color", "black");
+		AA = true;
+	});
+	$(".answer").on('click', function(event) {
+		if (!AA) {return};
+		$("#rightside").text(this.innerHTML);
+		if (this.innerHTML == right) {
+			goeie += 1;
+			AA = false;
+			$("#message").text(welldone[Math.floor((Math.random() * welldone.length))]);
+			$("#rightside").animate({"color":"green"}, 100).effect("bounce");
+			$("#goeie").text(goeie);
+		} else{
+			$("#message").text(jammerdan[Math.floor((Math.random() * jammerdan.length))]);
+			$("#rightside").animate({"color":"red"}, 100).effect("shake");
+			foute += 1;
+			$("#foute").text(foute);
+		};
+
+	});
+
+	</script>
+</body>
+</html>
